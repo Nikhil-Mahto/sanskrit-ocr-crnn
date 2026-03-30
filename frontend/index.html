@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanskrit OCR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Printed Devanagari OCR</p>
+        <h1>Sanskrit OCR</h1>
+        <p class="hero-text">
+          Upload a printed Sanskrit page, preview it instantly, and extract clean Unicode text through the existing OCR API.
+        </p>
+      </div>
+
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span class="theme-toggle__track">
+          <span class="theme-toggle__thumb"></span>
+        </span>
+        <span class="theme-toggle__label">Dark mode</span>
+      </button>
+    </header>
+
+    <main class="workspace">
+      <section class="panel uploader-panel" aria-labelledby="uploadTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Step 1</p>
+            <h2 id="uploadTitle">Upload an image</h2>
+          </div>
+          <p class="panel-note">PNG, JPG, WEBP up to 10 MB</p>
+        </div>
+
+        <label id="dropZone" class="dropzone" for="imageInput">
+          <input id="imageInput" type="file" accept="image/*" hidden>
+          <div class="dropzone-art">
+            <div class="dropzone-icon" aria-hidden="true">
+              <span></span>
+            </div>
+            <p class="dropzone-title">Drag and drop an image here</p>
+            <p class="dropzone-subtitle">or click to browse from your device</p>
+          </div>
+          <div class="dropzone-meta">
+            <span>Preview before upload</span>
+            <span>Instant validation</span>
+          </div>
+        </label>
+
+        <p id="fileMeta" class="file-meta" aria-live="polite">No file selected yet.</p>
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="panel preview-panel" aria-labelledby="previewTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Step 2</p>
+            <h2 id="previewTitle">Preview</h2>
+          </div>
+        </div>
+
+        <div id="previewFrame" class="preview-frame is-empty">
+          <img id="previewImage" alt="Selected upload preview">
+          <div class="preview-empty">
+            <p>Your uploaded manuscript image will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel action-panel" aria-labelledby="actionTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Step 3</p>
+            <h2 id="actionTitle">Run OCR</h2>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="runButton" class="button button-primary" type="button" disabled>
+            <span id="runButtonLabel">Run OCR</span>
+            <span id="spinner" class="spinner" aria-hidden="true"></span>
+          </button>
+          <button id="clearButton" class="button button-secondary" type="button">Clear</button>
+        </div>
+
+        <div id="statusBadge" class="status-badge" aria-live="polite">Waiting for an image</div>
+      </section>
+
+      <section class="panel output-panel" aria-labelledby="outputTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">Step 4</p>
+            <h2 id="outputTitle">Extracted text</h2>
+          </div>
+          <button id="copyButton" class="copy-button" type="button" disabled>Copy text</button>
+        </div>
+
+        <div class="output-wrap">
+          <textarea
+            id="outputText"
+            class="output-text"
+            placeholder="Recognized Sanskrit text will appear here."
+            readonly
+          ></textarea>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
