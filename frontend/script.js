@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:5000/ocr";
+const API_URL = new URL("/ocr", window.location.origin).toString();
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_TYPES = new Set([
   "image/png",

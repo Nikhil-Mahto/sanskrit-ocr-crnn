@@ -3,13 +3,14 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 
 from sanskrit_ocr.infer import OCRInferenceEngine
 
 
 def create_app() -> Flask:
-    app = Flask(__name__)
+    frontend_dir = Path(__file__).resolve().parent.parent / "frontend"
+    app = Flask(__name__, static_folder=str(frontend_dir), static_url_path="")
 
     checkpoint = Path(os.environ.get("OCR_CHECKPOINT", "checkpoints/sanskrit_crnn.pt"))
     device = os.environ.get("OCR_DEVICE", "cuda")
@@ -30,6 +31,17 @@ def create_app() -> Flask:
     @app.get("/health")
     def health() -> tuple:
         return jsonify({"status": "ok"}), 200
+
+    @app.get("/")
+    def index():
+        return send_from_directory(frontend_dir, "index.html")
+
+    @app.get("/<path:path>")
+    def frontend_assets(path: str):
+        asset_path = frontend_dir / path
+        if asset_path.exists() and asset_path.is_file():
+            return send_from_directory(frontend_dir, path)
+        return jsonify({"error": "Not found"}), 404
 
     @app.post("/ocr")
     def ocr() -> tuple:
