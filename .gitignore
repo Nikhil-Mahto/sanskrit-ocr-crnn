@@ -5,6 +5,8 @@ __pycache__/
 
 checkpoints/
 *.pt
+!checkpoints/
+!checkpoints/sanskrit_crnn.pt
 
 dataset/images/
 
