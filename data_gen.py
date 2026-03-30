@@ -136,6 +136,7 @@ def resolve_font_path(requested_path: Path | None) -> Path:
 
 
 def build_text_corpus() -> list[str]:
+    # Mix fixed Sanskrit lines with synthetic word combinations to create broader OCR coverage.
     corpus = list(SANSKRIT_LINES)
     for size in range(2, 8):
         for _ in range(220):
@@ -174,6 +175,7 @@ def render_text_image(text: str, font_path: Path, image_height: int, font_size: 
     draw.text((offset_x, offset_y), text, font=font, fill=random.randint(0, 40))
     add_noise(draw, width, image_height, density=max(10, width // 18))
 
+    # Layer multiple lightweight perturbations so the synthetic set better approximates scanned documents.
     if random.random() < 0.75:
         canvas = ImageEnhance.Brightness(canvas).enhance(random.uniform(0.75, 1.25))
     if random.random() < 0.55:
